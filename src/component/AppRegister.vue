@@ -7,13 +7,13 @@
         <label for="password"><b>Password</b></label>
         <input v-model="user.password" type="password" placeholder="Enter Password" name="password" required>
     
-        <button v-on:click="registerUser">Register</button>
+        <button @click="registerUser">Register</button>
       </div>
   </div> 
 </template>
 
 <script>
-import {authService} from '../services/auth.service.js'
+import {authService} from '../services/auth.service'
 
 export default {
   

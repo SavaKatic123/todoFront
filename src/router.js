@@ -9,6 +9,7 @@ import AppHome from './component/AppHome.vue'
 Vue.use(Router);
 const router = new Router({
   mode: 'history',
+  linkExactActiveClass: 'nav navbar-nav abc',
   routes: [
     {
       path: '/dashboard',

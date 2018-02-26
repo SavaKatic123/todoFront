@@ -5,16 +5,16 @@
           <div class="navbar-header">
             <a class="navbar-brand" href="">ToDo</a>
           </div>
-          <ul class="nav navbar-nav">
-            <li v-bind:class="{ active: checkIfActive(1) }"><a href="/">Home</a></li>
-            <div class="nav navbar-nav" v-if="!isUserLogged()">
-              <li v-bind:class="{ active: checkIfActive(2) }"><a href="/login">Login</a></li>
-              <li v-bind:class="{ active: checkIfActive(3) }"><a href="/register">Register</a></li>
-            </div>
-            <div class="nav navbar-nav" v-else>
-              <li><a v-on:click="logoutUser()" href="/">Logout</a></li>
-            </div>
-          </ul>
+            <ul class="nav navbar-nav">
+              <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+              <div v-if="!isUserLogged()" class="nav navbar-nav">
+                <li><router-link :to="{ name: 'login'}">Login</router-link></li>
+                <li><router-link :to="{ name: 'register'}">Register</router-link></li>
+              </div>
+              <div class="nav navbar-nav" v-else>
+                <li><a @click="logoutUser()" href="/">Logout</a></li>
+              </div>
+            </ul>
         </div>
       </nav>
       <router-view></router-view>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {authService} from './services/auth.service.js'
+import {authService} from './services/auth.service'
 export default {
   name: 'app',
   data () {
@@ -37,18 +37,6 @@ export default {
     logoutUser() {
       authService.logoutUser();
     },
-    checkIfActive(id) {
-      if(this.$route.path == "/" && id == 1) {
-        return true;
-      }
-      if(this.$route.path == "/login" && id == 2) {
-        return true;
-      }
-      if(this.$route.path == "/register" && id == 3) {
-        return true;
-      }
-      return false;
-    }
   }
 }
 
@@ -118,6 +106,11 @@ textarea {
 
 table {
   width: 100%;
+}
+
+.abc {
+  background-color: gray !important;
+  color: white !important;
 }
 
 </style>

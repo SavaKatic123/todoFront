@@ -1,6 +1,7 @@
-import router from '../router.js'
-import {axiosService} from '../services/axios.service.js'
-import {API_ENDPOINTS} from '../contants.js'
+import router from '../router'
+import {axiosService} from '../services/axios.service'
+import {API_ENDPOINTS} from '../constants'
+import isNil from 'lodash/isNil'
 
 class AuthService {
 
@@ -13,7 +14,7 @@ class AuthService {
       token = response.data.access_token;
       localStorage.setItem("token", token);
       router.push('/dashboard');
-      });
+    });
   }
 
   registerUser(user) {
@@ -24,7 +25,7 @@ class AuthService {
     }).then((response) => {
       result = response.data;
       router.push('/login');
-      });
+    });
   }
 
   logoutUser() {
@@ -32,14 +33,7 @@ class AuthService {
   }
 
   isUserLogged() {
-    if(localStorage.getItem('token') != null && localStorage.getItem('token') != undefined) 
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return !isNil(localStorage.getItem('token'));
   }
 
   redirectNonUser() {

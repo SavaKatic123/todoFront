@@ -15,10 +15,10 @@
 
 <script>
 import SingleTask from './SingleTask'
-import {axiosService} from '../services/axios.service.js'
-import {API_ENDPOINTS} from '../contants.js'
-import {EventBus} from '../events/EventBus.js'
-import {authService} from '../services/auth.service.js'
+import {axiosService} from '../services/axios.service'
+import {API_ENDPOINTS} from '../constants'
+import {eventBus} from '../events/eventBus'
+import {authService} from '../services/auth.service'
 
 export default {
   props: {
@@ -51,12 +51,12 @@ export default {
     }
     let tasks;
     axiosService.setUpParams();
-    axiosService.getCall(API_ENDPOINTS.READ_TASKS).then((response) => {
+    axiosService.getCall(API_ENDPOINTS.UPDATE_TASK).then((response) => {
       this.tasks = response.data;
     });
   },
   mounted() {
-    EventBus.$on('changedTask', (task) => {
+    eventBus.$on('changedTask', (task) => {
       if(task.id == undefined || task.id == null) {
         let createdTask = task;
         axiosService.postCall(API_ENDPOINTS.UPDATE_TASK, {
@@ -85,6 +85,5 @@ export default {
   components: {
     SingleTask
   },
-
 }
 </script>

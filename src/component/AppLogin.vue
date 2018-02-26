@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {authService} from '../services/auth.service.js'
+import {authService} from '../services/auth.service'
 
 export default {
   data() {

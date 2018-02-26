@@ -14,9 +14,9 @@
 <script>
 import TaskCreate from './TaskCreate.vue'
 import TaskList from './TaskList.vue'
-import {axiosService} from '../services/axios.service.js'
-import {API_ENDPOINTS} from '../contants.js'
-import {EventBus} from '../events/EventBus.js'
+import {axiosService} from '../services/axios.service'
+import {API_ENDPOINTS} from '../constants'
+import {eventBus} from '../events/eventBus'
 
 export default {
   data() {
@@ -38,7 +38,7 @@ export default {
     TaskList
   },
   mounted() {
-    EventBus.$on('taskEdited', (task) => {
+    eventBus.$on('taskEdited', (task) => {
       this.modifiedTask = task;
     });
   }

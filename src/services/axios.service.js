@@ -3,8 +3,7 @@ import axios from 'axios';
 
 class AxiosService {
   constructor() {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-    axios.defaults.baseURL = "http://127.0.0.1/api/";
+    this.setUpParams();
   }
   postCall(endpoint, params) {
     return axios.post(endpoint, params);

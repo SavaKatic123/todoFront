@@ -19,15 +19,15 @@
 </template>
 
 <script>
-import {EventBus} from '../events/EventBus.js'
-import {axiosService} from '../services/axios.service.js'
-import {API_ENDPOINTS} from '../contants.js'
+import {eventBus} from '../events/eventBus'
+import {axiosService} from '../services/axios.service'
+import {API_ENDPOINTS} from '../constants'
 
 export default {
   props: {
     task: {
       type: Object,
-      default: function() {
+      default: () => {
         return {
           name: '', desc: '', is_done: false, is_important: false  
         }
@@ -35,7 +35,7 @@ export default {
     },
     modifiedTask: {
       type: Object,
-      default: function() {
+      default: () => {
         return {
           name: '', desc: '', is_done: false, is_important: false  
         }
@@ -45,14 +45,10 @@ export default {
       type: Number,
     }
   },
-  data() {
-    return {
-    }
-  },
   methods: {
     deleteTask(index) {
       let updatedTask = this.task;
-      axiosService.deleteCall(API_ENDPOINTS.UPDATE_TASK + "/" + updatedTask.id)
+      axiosService.deleteCall(`${API_ENDPOINTS.UPDATE_TASK}/${updatedTask.id}`)
       .then((response) => {
         updatedTask = response.data
         this.$emit('deletedTask', index);
@@ -62,7 +58,7 @@ export default {
       let updatedTask = this.task;
       updatedTask.is_done = true;
 
-      axiosService.putCall(API_ENDPOINTS.UPDATE_TASK + "/" + updatedTask.id, {
+      axiosService.putCall(`${API_ENDPOINTS.UPDATE_TASK}/${updatedTask.id}`, {
         updatedTask
       }).then((response) => {
         this.$emit('finishedTask', index);
@@ -72,21 +68,16 @@ export default {
       if(id == this.task.is_important)
         return;
       let updatedTask = this.task;
-      if(updatedTask.is_important == 0) {
-        updatedTask.is_important = 1;
-      }
-      else {
-        updatedTask.is_important = 0;
-      }
+      updatedTask.is_important = updatedTask.is_important == 0 ? 1 : 0
       
-      axiosService.putCall(API_ENDPOINTS.UPDATE_TASK + "/" + updatedTask.id, {
+      axiosService.putCall(`${API_ENDPOINTS.UPDATE_TASK}/${updatedTask.id}`, {
         updatedTask
       }).then((response) => {
         this.$emit('changedPriority', index, updatedTask.is_important);
       });
     },
     editTask(index) {
-      EventBus.$emit('taskEdited', this.task);
+      eventBus.$emit('taskEdited', this.task);
     }
   }, 
 }

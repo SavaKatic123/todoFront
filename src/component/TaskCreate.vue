@@ -7,13 +7,13 @@
 </template>
 
 <script>
-import {EventBus} from '../events/EventBus.js'
+import {eventBus} from '../events/eventBus'
 
 export default {
   props: {
     task: {
       type: Object,
-      default: function() {
+      default: () => {
         return {
           name: '', desc: '', is_done: false, is_important: false  
         }
@@ -32,7 +32,7 @@ export default {
         this.task.desc = "";
       }
       else {
-        EventBus.$emit('changedTask', this.task);
+        eventBus.$emit('changedTask', this.task);
       }
     }
   },
