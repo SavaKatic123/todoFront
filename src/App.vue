@@ -1,23 +1,53 @@
 <template>
     <div>
-    <router-view></router-view>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="">ToDo</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li v-bind:class="{ active: checkIfActive(1) }"><a href="/">Home</a></li>
+            <div class="nav navbar-nav" v-if="!isUserLogged()">
+              <li v-bind:class="{ active: checkIfActive(2) }"><a href="/login">Login</a></li>
+              <li v-bind:class="{ active: checkIfActive(3) }"><a href="/register">Register</a></li>
+            </div>
+            <div class="nav navbar-nav" v-else>
+              <li><a v-on:click="logoutUser()" href="/">Logout</a></li>
+            </div>
+          </ul>
+        </div>
+      </nav>
+      <router-view></router-view>
     </div>
 </template>
 
 <script>
-import register from './component/register.vue'
-import home from './component/home.vue'
-import login from './component/login.vue'
+import {authService} from './services/auth.service.js'
 export default {
   name: 'app',
-  components: {
-    home,
-    register,
-    login,
-  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    isUserLogged() {
+      return authService.isUserLogged();
+    },
+    logoutUser() {
+      authService.logoutUser();
+    },
+    checkIfActive(id) {
+      if(this.$route.path == "/" && id == 1) {
+        return true;
+      }
+      if(this.$route.path == "/login" && id == 2) {
+        return true;
+      }
+      if(this.$route.path == "/register" && id == 3) {
+        return true;
+      }
+      return false;
     }
   }
 }
@@ -88,28 +118,6 @@ textarea {
 
 table {
   width: 100%;
-}
-
-#little-buttons {
-  width: 20% !important;
-  margin-right: 10px !important;
-  margin-left: 10px !important;
-  margin-top: 10px !important;
-  padding: 5px, 5px !important;
-  display: flex;
-  float: left;
-}
-
-#selected-box {
-  width: 10%;
-  margin-top: 15px;  
-}
-.doneToggle {
-  color: aqua;
-}
-
-.high {
-  background-color: #FFA07A;
 }
 
 </style>

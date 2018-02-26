@@ -1,32 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Router from 'vue-router'
-import login from './component/login.vue'
-import home from './component/home.vue'
-import register from './component/register.vue'
-
-
-Vue.use(Router);
-const router = new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: 'register',
-      component: register,
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: login,
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: home,
-    }]
-});
-export default router;
+import axiosService from './services/axios.service.js'
+import router from './router.js'
+import AppLogin from './component/AppLogin.vue'
+import AppDashboard from './component/AppDashboard.vue'
+import AppRegister from './component/AppRegister.vue'
+import AppHome from './component/AppHome.vue'
 
 /*
 
